@@ -1,0 +1,47 @@
+filebeat.inputs:
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  json.add_error_key: true
+  paths:
+    - @@VOODOO_LP_APP@@/logs/voodoo-tasks.log
+  fields_under_root: true
+  fields:
+    c2:
+      log:
+        type: implant_task
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  json.add_error_key: true
+  paths:
+    - @@VOODOO_LP_APP@@/logs/voodoo-downloads.log
+  fields_under_root: true
+  fields:
+    c2:
+      log:
+        type: downloads
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false  
+
+setup.template.settings:
+  index.number_of_shards: 3
+
+name: "@@HOSTNAME@@"
+fields_under_root: true
+fields:
+  c2:
+    program: voodoo
+  infra:
+    attack_scenario: someattackscenario
+    log:
+      type: rtops
+
+harvester.limit: 1
+
+output.logstash:
+  hosts: ["@@HOSTANDPORT@@"]
+  ssl.certificate_authorities: ["/etc/filebeat/redelkCA.crt"]

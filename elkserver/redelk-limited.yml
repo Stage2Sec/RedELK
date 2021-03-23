@@ -82,6 +82,9 @@ services:
       # Have a look at docker/redelk-logstash/redelkinstalldata/config/ for working configs
       #- ./mounts/logstash-config/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
       #- ./mounts/logstash-config/redelk-main:/usr/share/logstash/redelk-main
+      - ./docker/redelk-logstash/redelkinstalldata/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ./docker/redelk-logstash/redelkinstalldata/redelk-main:/usr/share/logstash/redelk-main
+      - ./mounts/redelk-www/c2logs:/usr/share/logstash/c2logs
     environment:
       - node.name=redelk-logstash
       - config.reload.automatic:true
