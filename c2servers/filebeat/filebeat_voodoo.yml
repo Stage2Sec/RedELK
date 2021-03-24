@@ -4,7 +4,7 @@ filebeat.inputs:
   enabled: true
   json.add_error_key: true
   paths:
-    - @@VOODOO_LP_APP@@/logs/voodoo-tasks.log
+    - @@VOODOO_LP_DIR@@/app/logs/voodoo-tasks.log
   fields_under_root: true
   fields:
     c2:
@@ -16,12 +16,24 @@ filebeat.inputs:
   enabled: true
   json.add_error_key: true
   paths:
-    - @@VOODOO_LP_APP@@/logs/voodoo-downloads.log
+    - @@VOODOO_LP_DIR@@/app/logs/voodoo-downloads.log
   fields_under_root: true
   fields:
     c2:
       log:
         type: downloads
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  json.add_error_key: true
+  paths:
+    - @@VOODOO_LP_DIR@@/app/logs/voodoo-implants.log
+  fields_under_root: true
+  fields:
+    c2:
+      log:
+        type: implant_newimplant
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
@@ -36,7 +48,7 @@ fields:
   c2:
     program: voodoo
   infra:
-    attack_scenario: someattackscenario
+    attack_scenario: @@ATTACKSCENARIO@@
     log:
       type: rtops
 

@@ -68,7 +68,7 @@ if ! [ $# -eq 3 ] ; then
     echo "[X] require 1st parameter: identifier of this machine to set in filebeat config."
     echo "[X] require 2nd parameter: attackscenario name."
     echo "[X] require 3rd parameter: IP/DNS:port where to ship logs to (enter 5044 if you are using default logstash port)."
-    echo "[X] require 4th parameter: Voodoo LP app directory location"
+    echo "[X] require 4th parameter: Voodoo LP directory location"
     echoerror "Incorrect amount of parameters"
     exit 1
 fi
@@ -169,7 +169,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Altering log source field in filebeat config" | tee -a $LOGFILE
-sed -i s/'@@VOODOO_LP_APP@@'/$4/g /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
+sed -i s/'@@VOODOO_LP_DIR@@'/$4/g /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not change log destination field in filebeat config (Error Code: $ERROR)."
